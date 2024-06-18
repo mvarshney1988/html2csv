@@ -10,11 +10,11 @@ import java.io.IOException;
 
 public class HtmlTableToCsv {
     public static void main(String[] args) throws IOException {
-       String op =  genCSV("src/main/resources/test.html", "jfc3");
+       String op =  genCSV("src/main/resources/test.html", "jfc3", "class");
        System.out.println(op);
     }
 
-    public static String genCSV(String path, String cssClass) throws IOException {
+    public static String genCSV(String path, String cssAttr, String selectorType) throws IOException {
         // Load the HTML file
         File f = new File(path);
         // Prepare the writer
@@ -22,7 +22,7 @@ public class HtmlTableToCsv {
         Document doc = Jsoup.parse(f, "UTF-8");
 
         // Get the tables
-        doc.select("table[class=\""+cssClass+"\"]").forEach(table -> {
+        doc.select("table["+selectorType+"=\""+cssAttr+"\"]").forEach(table -> {
 try {
     String opFile = table.select("caption").text().replaceAll(" ", "");
     PrintWriter pw = new PrintWriter("src/main/resources/"+opFile+".csv");
